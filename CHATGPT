@@ -1,0 +1,31 @@
+javascript:(function() {
+  let question = prompt("What would you like to ask ChatGPT?");
+  if (question !== null) {
+    let url = "https://api.openai.com/v1/engines/davinci-codex/completions";
+    let payload = {
+      prompt: question,
+      max_tokens: 50,
+      temperature: 0.7,
+      n: 1,
+      stop: "\n",
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer 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
+", // Replace API_KEY with your OpenAI API key
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let answer = data.choices[0].text.trim();
+        alert(`ChatGPT says: ${answer}`);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+})();
+
